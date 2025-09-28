@@ -1,82 +1,51 @@
-import { useState, type ChangeEvent } from "react";
+import { useState } from "react";
+import FileForm from "./components/file-form";
+import Alert from "./components/alert";
+import Card from "./components/card";
+import JSONVisualizer from "./components/file-visualizer";
 
 function App() {
-  const [file, setFile] = useState<File | undefined>();
   const [parsedObject, setParsedObject] = useState<Record<
     string,
     unknown
-  > | null>({});
+  > | null>();
   const [error, setError] = useState<string | null>("");
 
-  const handleUpload = async (e: ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = e.target.files?.[0];
-    if (!selectedFile) return;
-    setFile(selectedFile);
-
+  const handleFormSubmit = (parsedObject: Record<string, unknown> | null) => {
     try {
-      const text = await selectedFile.text();
-      const result = safeParseJSON(text);
-      if (result) {
-        setParsedObject(result);
+      if (parsedObject) {
+        setParsedObject(parsedObject);
         setError(null);
       } else {
         setParsedObject(null);
         setError("The file does not contain a valid JSON object or array.");
       }
     } catch (err) {
-      console.error("File reading error:", err);
-      setParsedObject(null);
-      setError("Error reading file.");
-    }
-  };
-
-  const safeParseJSON = (
-    jsonString: string
-  ): Record<string, unknown> | null => {
-    try {
-      const parsed = JSON.parse(jsonString);
-
-      if (
-        typeof parsed === "object" &&
-        parsed !== null &&
-        !Array.isArray(parsed)
-      ) {
-        return parsed as Record<string, unknown>;
-      } else {
-        console.error("Parsed JSON is not a plain object.");
-        return null;
-      }
-    } catch (error) {
-      console.error("Invalid JSON:", error);
-      return null;
+      if (err instanceof Error) setError(err.message);
+      else setError("Unknown error.");
     }
   };
 
   return (
     <>
-      <form>
-        <input type="file" accept=".json,.xml" onChange={handleUpload}></input>
-      </form>
+      {!parsedObject && (
+        <div className="flex flex-col justify-center items-center h-screen">
+          <FileForm onSubmit={handleFormSubmit} />
+          {error && <Alert type="danger" message={error} className="mt-4" />}
+        </div>
+      )}
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
-
-      <main>
-        {file && <h1>File Uploaded: {file.name}</h1>}
-        {parsedObject && (
-          <>
-            <pre>{JSON.stringify(parsedObject, null, 2)}</pre>
-          </>
-        )}
-        {parsedObject &&
-          Object.entries(parsedObject as Record<string, unknown>).map(
-            ([key, value]) => (
-              <div key={key}>
-                <strong>{key}:</strong> {JSON.stringify(value)}
-              </div>
-            )
-          )}
-        <button className="btn w-64 rounded-full">Button</button>
-      </main>
+      {parsedObject && (
+        // Object.entries(parsedObject as Record<string, unknown>).map(
+        //   ([key, value]) => (
+        //     <Card key={key} prop={key} value={value} />
+        //     //   <div key={key}>
+        //     //     <strong>{key}:</strong> {JSON.stringify(value)}
+        //     //   </div>
+        //   )
+        // )
+        <JSONVisualizer json={parsedObject} />
+      )}
     </>
   );
 }
