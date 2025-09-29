@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, {
   useEffect,
   useMemo,
@@ -5,8 +6,6 @@ import React, {
   useRef,
   type ReactNode,
 } from "react";
-
-// JSON Hierarchy Visualizer (TypeScript + React) with collapsed object properties inside parent card
 
 type NodeKind =
   | "string"
@@ -230,19 +229,19 @@ export default function JSONVisualizer({
 
   const visibleNodes = nodesArray.filter((n) => isVisible(n.id));
 
-  function linePath(
-    fromPos: { x: number; y: number },
-    toPos: { x: number; y: number },
-    w: number = 140
-  ): string {
-    const startX = fromPos.x + 230;
-    const startY = fromPos.y + cardHeight / 2 + 38;
-    const endX = toPos.x + 0;
-    const endY = toPos.y + cardHeight / 2;
-    const cx1 = startX + w;
-    const cx2 = endX - w;
-    return `M ${startX} ${startY} C ${cx1} ${startY} ${cx2} ${endY} ${endX} ${endY}`;
-  }
+  // function linePath(
+  //   fromPos: { x: number; y: number },
+  //   toPos: { x: number; y: number },
+  //   w: number = 140
+  // ): string {
+  //   const startX = fromPos.x + 230;
+  //   const startY = fromPos.y + cardHeight / 2 + 38;
+  //   const endX = toPos.x + 0;
+  //   const endY = toPos.y + cardHeight / 2;
+  //   const cx1 = startX + w;
+  //   const cx2 = endX - w;
+  //   return `M ${startX} ${startY} C ${cx1} ${startY} ${cx2} ${endY} ${endX} ${endY}`;
+  // }
 
   function orthoLinePath(
     fromPos: { x: number; y: number },
@@ -253,17 +252,16 @@ export default function JSONVisualizer({
     const endX = toPos.x;
     const endY = toPos.y + cardHeight / 2;
 
-    const midX = (startX + endX) / 2; // horizontal first, then vertical
+    const midX = (startX + endX) / 2;
 
     return `M ${startX} ${startY} L ${midX} ${startY} L ${midX} ${endY} L ${endX} ${endY}`;
   }
 
   return (
-    <div className="w-full h-screen flex justify-center items-center">
+    <div className="">
       <div
         ref={containerRef}
-        className="relative shadow-sm rounded-md overflow-auto bg-base-200"
-        style={{ width: width, minHeight: 640 }}
+        className="relative shadow-sm rounded-md overflow-auto bg-base-200 w-full h-screen"
       >
         <svg
           className="absolute inset-0 pointer-events-none"
