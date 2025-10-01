@@ -11,6 +11,15 @@ importers:
       '@codemirror/lang-json':
         specifier: ^6.0.2
         version: 6.0.2
+      '@codemirror/lang-xml':
+        specifier: ^6.1.0
+        version: 6.1.0
+      '@codemirror/language':
+        specifier: ^6.11.3
+        version: 6.11.3
+      '@codemirror/lint':
+        specifier: ^6.8.5
+        version: 6.8.5
       '@tailwindcss/vite':
         specifier: ^4.1.13
         version: 4.1.13(vite@7.1.7(jiti@2.6.0)(lightningcss@1.30.1))
@@ -161,6 +170,9 @@ packages:
 
   '@codemirror/lang-json@6.0.2':
     resolution: {integrity: sha512-x2OtO+AvwEHrEwR0FyyPtfDUiloG3rnVTSZV1W8UteaLL8/MajQd8DpvUb2YVzC+/T18aSDv0H9mu+xw0EStoQ==}
+
+  '@codemirror/lang-xml@6.1.0':
+    resolution: {integrity: sha512-3z0blhicHLfwi2UgkZYRPioSgVTo9PV5GP5ducFH6FaHy0IAJRg+ixj5gTR1gnT/glAIC8xv4w2VL1LoZfs+Jg==}
 
   '@codemirror/language@6.11.3':
     resolution: {integrity: sha512-9HBM2XnwDj7fnu0551HkGdrUrrqmYq/WC5iv6nbY2WdicXdGbhR/gfbZOH73Aqj4351alY1+aoG9rCNfiwS1RA==}
@@ -421,6 +433,9 @@ packages:
 
   '@lezer/lr@1.4.2':
     resolution: {integrity: sha512-pu0K1jCIdnQ12aWNaAVU5bzi7Bd1w54J3ECgANPmYLtQKP0HBj2cE/5coBD66MT10xbtIuUr7tg0Shbsvk0mDA==}
+
+  '@lezer/xml@1.0.6':
+    resolution: {integrity: sha512-CdDwirL0OEaStFue/66ZmFSeppuL6Dwjlk8qk153mSQwiSH/Dlri4GNymrNWnUmPl2Um7QfV1FO9KFUyX3Twww==}
 
   '@marijn/find-cluster-break@1.0.2':
     resolution: {integrity: sha512-l0h88YhZFyKdXIFNfSWpyjStDjGHwZ/U7iobcK1cQQD8sejsONdQtTVU+1wVN1PBw40PiiHB1vA5S7VTfQiP9g==}
@@ -1551,6 +1566,15 @@ snapshots:
       '@codemirror/language': 6.11.3
       '@lezer/json': 1.0.3
 
+  '@codemirror/lang-xml@6.1.0':
+    dependencies:
+      '@codemirror/autocomplete': 6.19.0
+      '@codemirror/language': 6.11.3
+      '@codemirror/state': 6.5.2
+      '@codemirror/view': 6.38.3
+      '@lezer/common': 1.2.3
+      '@lezer/xml': 1.0.6
+
   '@codemirror/language@6.11.3':
     dependencies:
       '@codemirror/state': 6.5.2
@@ -1761,6 +1785,12 @@ snapshots:
   '@lezer/lr@1.4.2':
     dependencies:
       '@lezer/common': 1.2.3
+
+  '@lezer/xml@1.0.6':
+    dependencies:
+      '@lezer/common': 1.2.3
+      '@lezer/highlight': 1.2.1
+      '@lezer/lr': 1.4.2
 
   '@marijn/find-cluster-break@1.0.2': {}
 

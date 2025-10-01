@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, {
   useEffect,
   useMemo,
@@ -117,7 +116,6 @@ export default function JSONVisualizer({
   cardHeight = 70,
 }: JSONVisualizerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-
   const nodesArray = useMemo(() => buildNodes(json, "root", null, 0), [json]);
 
   const nodesById = useMemo(() => {
@@ -132,8 +130,8 @@ export default function JSONVisualizer({
     for (const node of nodesArray) {
       const d = node.depth;
       if (!yCounters[d]) yCounters[d] = 0;
-      const x = d * laneWidth + 20 + yCounters[d] * 50; // add extra horizontal offset
-      const y = yCounters[d] * (cardHeight + 100) + 20;
+      const x = d * laneWidth + 20 + yCounters[d] * 50;
+      const y = yCounters[d] * (cardHeight + 100) + 280;
       map[node.id] = { x, y };
       yCounters[d]++;
     }
@@ -257,11 +255,12 @@ export default function JSONVisualizer({
     return `M ${startX} ${startY} L ${midX} ${startY} L ${midX} ${endY} L ${endX} ${endY}`;
   }
 
+  if (!json) return <h1 className="h-screen w-full flex justify-center items-center text-base-content/60">Start typing to see your JSON/XML</h1>;
   return (
-    <div className="">
+    <div>
       <div
         ref={containerRef}
-        className="relative shadow-sm rounded-md overflow-auto bg-base-200 w-full h-screen"
+        className="relative shadow-sm overflow-auto bg-base-200 w-full h-screen"
       >
         <svg
           className="absolute inset-0 pointer-events-none"
